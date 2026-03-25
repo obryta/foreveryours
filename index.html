@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Forever & Always — Kwame & Abena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ivory:   #faf7f2;
+    --cream:   #f2ece0;
+    --blush:   #e8c9b4;
+    --rose:    #c4826a;
+    --deep:    #7a4a38;
+    --gold:    #b89a6a;
+    --ink:     #2a1f1a;
+    --muted:   #8a7060;
+    --white:   #ffffff;
+    --serif:   'Cormorant Garamond', Georgia, serif;
+    --sans:    'Jost', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ivory);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE overlay ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: linear-gradient(to bottom, rgba(250,247,242,0.95), rgba(250,247,242,0));
+    backdrop-filter: blur(4px);
+  }
+  .nav-brand {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    letter-spacing: 0.04em;
+    color: var(--deep);
+    text-decoration: none;
+    font-style: italic;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--rose); }
+  .nav-rsvp {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border: 0.5px solid var(--gold);
+    color: var(--deep);
+    text-decoration: none;
+    transition: background 0.25s, color 0.25s;
+  }
+  .nav-rsvp:hover { background: var(--deep); color: var(--ivory); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 120px 24px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-petals {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 30%, rgba(232,201,180,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 80% 70%, rgba(196,130,106,0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(184,154,106,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-ornament {
+    font-size: 1rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 1s 0.2s forwards;
+  }
+  .hero-subtitle-top {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s 0.4s forwards;
+  }
+  .hero-portrait-ring {
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    border: 1px solid var(--blush);
+    padding: 6px;
+    margin: 0 auto 40px;
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s forwards;
+  }
+  .hero-portrait-ring::before {
+    content: '';
+    position: absolute; inset: -12px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(184,154,106,0.35);
+  }
+  .hero-portrait-ring::after {
+    content: '♡';
+    position: absolute;
+    bottom: -6px; left: 50%; transform: translateX(-50%);
+    font-size: 1rem;
+    color: var(--rose);
+    background: var(--ivory);
+    padding: 0 8px;
+  }
+  .hero-portrait-ring img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    background: var(--cream);
+  }
+  .hero-portrait-placeholder {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(145deg, var(--cream), var(--blush));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-size: 3rem;
+    color: var(--rose);
+    font-style: italic;
+  }
+  .hero-names {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    opacity: 0;
+    animation: fadeUp 1s 0.7s forwards;
+  }
+  .hero-names em { color: var(--rose); font-style: italic; }
+  .hero-ampersand {
+    font-size: 0.6em;
+    color: var(--gold);
+    display: block;
+    line-height: 1.4;
+  }
+  .hero-date-row {
+    display: flex; align-items: center; gap: 20px;
+    margin: 36px auto 0;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+  }
+  .hero-date-block { text-align: center; }
+  .hero-date-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .hero-date-value {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--deep);
+    font-style: italic;
+  }
+  .hero-date-sep {
+    width: 40px; height: 0.5px;
+    background: var(--gold);
+  }
+  .hero-quote {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 32px auto 0;
+    line-height: 1.75;
+    opacity: 0;
+    animation: fadeUp 1s 1.1s forwards;
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 24px; }
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    text-align: center;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .ornament-line {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    margin-bottom: 60px;
+  }
+  .ornament-line::before, .ornament-line::after {
+    content: '';
+    height: 0.5px; width: 60px;
+    background: var(--gold);
+  }
+  .ornament-line span { color: var(--gold); font-size: 0.7rem; }
+
+  /* ── STORY ── */
+  .story-section { background: var(--white); }
+  .story-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .story-text {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    line-height: 2;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .story-text + .story-text { margin-top: 28px; }
+  .story-highlight {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  /* ── GALLERY ── */
+  .gallery-section { background: var(--cream); }
+  .gallery-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 12px;
+  }
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .gallery-item:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .gallery-placeholder {
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(145deg, var(--blush), var(--cream));
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .gallery-item:first-child .gallery-placeholder { aspect-ratio: 4/3; }
+  .gallery-placeholder-icon { font-size: 2rem; opacity: 0.4; }
+  .gallery-item:hover .gallery-placeholder { transform: scale(1.04); }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(42,31,26,0.5), transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 20px;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-caption { font-size: 0.75rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.9); }
+  .gallery-view-all {
+    display: block; text-align: center; margin-top: 40px;
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--deep); text-decoration: none;
+    padding: 14px 32px; border: 0.5px solid var(--gold);
+    width: fit-content; margin: 40px auto 0;
+    transition: background 0.25s, color 0.25s;
+  }
+  .gallery-view-all:hover { background: var(--deep); color: var(--ivory); }
+
+  /* ── WISHES / TRIBUTES ── */
+  .wishes-section { background: var(--ivory); }
+  .wishes-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .wish-card {
+    background: var(--white);
+    border: 0.5px solid var(--blush);
+    padding: 32px 28px;
+    position: relative;
+  }
+  .wish-card::before {
+    content: '\201C';
+    font-family: var(--serif);
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--blush);
+    position: absolute; top: 12px; left: 20px;
+  }
+  .wish-text {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-style: italic;
+    line-height: 1.8;
+    color: var(--ink);
+    margin-bottom: 20px;
+    padding-top: 20px;
+  }
+  .wish-author {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .wish-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--blush);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--deep);
+    flex-shrink: 0;
+  }
+  .wish-name {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+  .wish-relation {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+  .wishes-view-all {
+    display: block; text-align: center; margin-top: 40px;
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--deep); text-decoration: none;
+    padding: 14px 32px; border: 0.5px solid var(--gold);
+    width: fit-content; margin: 40px auto 0;
+    transition: background 0.25s, color 0.25s;
+  }
+  .wishes-view-all:hover { background: var(--deep); color: var(--ivory); }
+
+  /* ── EVENTS ── */
+  .events-section { background: var(--deep); color: var(--ivory); }
+  .events-section .section-title { color: var(--ivory); }
+  .events-section .section-label { color: var(--blush); }
+  .events-section .ornament-line::before,
+  .events-section .ornament-line::after { background: var(--blush); opacity: 0.4; }
+  .events-section .ornament-line span { color: var(--blush); }
+  .events-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .event-card {
+    display: flex; gap: 32px; align-items: flex-start;
+    padding: 36px 40px;
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(232,201,180,0.15);
+    transition: background 0.3s;
+  }
+  .event-card:hover { background: rgba(255,255,255,0.08); }
+  .event-date-block {
+    text-align: center; min-width: 60px;
+    border-right: 0.5px solid rgba(232,201,180,0.2);
+    padding-right: 32px;
+    flex-shrink: 0;
+  }
+  .event-month {
+    font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--blush); margin-bottom: 4px;
+  }
+  .event-day {
+    font-family: var(--serif);
+    font-size: 2.6rem; font-weight: 300; line-height: 1;
+    color: var(--ivory);
+  }
+  .event-body { flex: 1; }
+  .event-name {
+    font-family: var(--serif);
+    font-size: 1.4rem; font-weight: 300;
+    color: var(--ivory); margin-bottom: 8px;
+  }
+  .event-time {
+    font-size: 0.65rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .event-location {
+    font-size: 0.8rem; color: rgba(250,247,242,0.6);
+    margin-bottom: 10px; line-height: 1.6;
+  }
+  .event-note {
+    font-family: var(--serif);
+    font-size: 0.85rem; font-style: italic;
+    color: var(--blush); opacity: 0.8;
+  }
+  .event-dress {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 4px 12px; border: 0.5px solid rgba(232,201,180,0.35);
+    color: var(--blush);
+  }
+
+  /* ── RSVP ── */
+  .rsvp-section { background: var(--cream); }
+  .rsvp-inner {
+    max-width: 580px;
+    margin: 0 auto;
+  }
+  .rsvp-form { display: flex; flex-direction: column; gap: 18px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field label {
+    font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    background: var(--white);
+    border: 0.5px solid var(--blush);
+    padding: 12px 16px;
+    font-family: var(--sans);
+    font-size: 0.85rem; font-weight: 300;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.25s;
+    width: 100%;
+    appearance: none;
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus { border-color: var(--rose); }
+  .form-field textarea { resize: vertical; min-height: 100px; }
+  .rsvp-btn {
+    background: var(--deep);
+    color: var(--ivory);
+    border: none;
+    padding: 16px 48px;
+    font-family: var(--sans);
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.15s;
+    width: 100%; margin-top: 8px;
+  }
+  .rsvp-btn:hover { background: var(--rose); }
+  .rsvp-btn:active { transform: scale(0.98); }
+  .rsvp-success {
+    text-align: center; padding: 40px;
+    display: none;
+  }
+  .rsvp-success-icon {
+    font-size: 2.5rem; color: var(--rose); margin-bottom: 16px;
+  }
+  .rsvp-success-title {
+    font-family: var(--serif);
+    font-size: 1.8rem; font-style: italic; color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .rsvp-success-sub {
+    font-size: 0.8rem; color: var(--muted);
+    letter-spacing: 0.05em; line-height: 1.7;
+  }
+
+  /* ── LOCATION ── */
+  .location-section { background: var(--white); }
+  .location-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+  .location-map {
+    width: 100%; height: 300px;
+    background: linear-gradient(145deg, #e8e0d8, #d8cfc5);
+    position: relative; overflow: hidden;
+    margin-bottom: 40px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .location-map-placeholder {
+    text-align: center; color: var(--muted);
+  }
+  .location-map-placeholder .map-icon { font-size: 2.5rem; margin-bottom: 8px; }
+  .location-map-placeholder p { font-size: 0.75rem; letter-spacing: 0.1em; }
+  .location-details {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px; margin-top: 40px;
+    text-align: center;
+  }
+  .location-item-label {
+    font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .location-item-value {
+    font-family: var(--serif);
+    font-size: 1rem; color: var(--ink); line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: var(--ivory);
+    text-align: center;
+    padding: 60px 24px;
+  }
+  .footer-ornament { color: var(--gold); font-size: 0.9rem; letter-spacing: 0.5em; margin-bottom: 20px; }
+  .footer-title {
+    font-family: var(--serif);
+    font-size: 1.5rem; font-style: italic; font-weight: 300;
+    margin-bottom: 8px;
+  }
+  .footer-sub {
+    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(250,247,242,0.4); margin-bottom: 32px;
+  }
+  .footer-line {
+    width: 60px; height: 0.5px;
+    background: var(--gold); margin: 0 auto 24px;
+  }
+  .footer-copy {
+    font-size: 0.65rem; color: rgba(250,247,242,0.3);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── COUNTDOWN ── */
+  .countdown-bar {
+    background: var(--deep);
+    padding: 20px 24px;
+    display: flex; align-items: center; justify-content: center; gap: 36px;
+    flex-wrap: wrap;
+  }
+  .countdown-label {
+    font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--blush);
+  }
+  .countdown-units { display: flex; gap: 24px; }
+  .countdown-unit { text-align: center; }
+  .countdown-number {
+    font-family: var(--serif);
+    font-size: 2rem; color: var(--ivory); line-height: 1;
+  }
+  .countdown-unit-label {
+    font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--blush); opacity: 0.7; margin-top: 4px;
+  }
+  .countdown-sep { font-family: var(--serif); font-size: 1.5rem; color: var(--gold); align-self: center; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:first-child { grid-column: span 2; }
+    .wishes-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .location-details { grid-template-columns: 1fr; }
+    .events-section { padding: 60px 16px; }
+    .event-card { flex-direction: column; gap: 16px; padding: 24px; }
+    .event-date-block { border-right: none; border-bottom: 0.5px solid rgba(232,201,180,0.2); padding-right: 0; padding-bottom: 16px; display: flex; gap: 12px; align-items: baseline; }
+    .event-day { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">Forever & Always</a>
+  <ul class="nav-links">
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#wishes">Wishes</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#location">Venue</a></li>
+  </ul>
+  <a class="nav-rsvp" href="#rsvp">RSVP</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-petals"></div>
+  <div class="hero-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+  <p class="hero-subtitle-top">Join us in celebrating the marriage of</p>
+
+  <div class="hero-portrait-ring">
+    <div class="hero-portrait-placeholder">K &amp; A</div>
+  </div>
+
+  <h1 class="hero-names">
+    <em>Kwame</em>
+    <span class="hero-ampersand">&amp;</span>
+    <em>Abena</em>
+  </h1>
+
+  <div class="hero-date-row">
+    <div class="hero-date-block">
+      <p class="hero-date-label">Date</p>
+      <p class="hero-date-value">July 19th, 2025</p>
+    </div>
+    <div class="hero-date-sep"></div>
+    <div class="hero-date-block">
+      <p class="hero-date-label">Venue</p>
+      <p class="hero-date-value">Accra, Ghana</p>
+    </div>
+    <div class="hero-date-sep"></div>
+    <div class="hero-date-block">
+      <p class="hero-date-label">Ceremony</p>
+      <p class="hero-date-value">11:00 AM</p>
+    </div>
+  </div>
+
+  <p class="hero-quote">"Two souls, one heart, one beautiful beginning."</p>
+</section>
+
+<!-- COUNTDOWN -->
+<div class="countdown-bar" id="countdown-bar">
+  <span class="countdown-label">Counting down to forever</span>
+  <div class="countdown-units">
+    <div class="countdown-unit">
+      <div class="countdown-number" id="cd-days">--</div>
+      <div class="countdown-unit-label">Days</div>
+    </div>
+    <div class="countdown-sep">:</div>
+    <div class="countdown-unit">
+      <div class="countdown-number" id="cd-hours">--</div>
+      <div class="countdown-unit-label">Hours</div>
+    </div>
+    <div class="countdown-sep">:</div>
+    <div class="countdown-unit">
+      <div class="countdown-number" id="cd-mins">--</div>
+      <div class="countdown-unit-label">Mins</div>
+    </div>
+    <div class="countdown-sep">:</div>
+    <div class="countdown-unit">
+      <div class="countdown-number" id="cd-secs">--</div>
+      <div class="countdown-unit-label">Secs</div>
+    </div>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="story-section reveal" id="story">
+  <p class="section-label">How it began</p>
+  <h2 class="section-title">Our Story</h2>
+  <div class="ornament-line"><span>♡</span></div>
+  <div class="story-inner">
+    <p class="story-text">
+      What started as a chance encounter at a mutual friend's gathering in Accra became the beginning of something neither Kwame nor Abena could have imagined. <span class="story-highlight">A quiet conversation about music, food, and life's big questions</span> stretched through the night until the stars themselves seemed to pause and listen.
+    </p>
+    <p class="story-text">
+      Kwame, a civil engineer with a love for long drives and jollof debates, found in Abena not just a partner, but his truest companion. Abena, a graphic designer whose creativity fills every room she enters, found in Kwame a steady warmth and a laugh that always feels like home.
+    </p>
+    <p class="story-text">
+      Three years, countless memories, and one unforgettable sunset proposal at Labadi Beach later — <span class="story-highlight">they said yes to forever.</span> Now they invite you, their most cherished family and friends, to witness the beginning of this beautiful chapter.
+    </p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section reveal" id="gallery">
+  <p class="section-label">Memories</p>
+  <h2 class="section-title">Our Gallery</h2>
+  <div class="ornament-line"><span>✦</span></div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="gallery-placeholder-icon">📷</span>
+        Engagement photo
+      </div>
+      <div class="gallery-overlay"><span class="gallery-caption">Labadi Beach, 2024</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="gallery-placeholder-icon">🌸</span>
+        Pre-wedding
+      </div>
+      <div class="gallery-overlay"><span class="gallery-caption">Botanical Garden</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="gallery-placeholder-icon">💍</span>
+        Proposal
+      </div>
+      <div class="gallery-overlay"><span class="gallery-caption">The big moment</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="gallery-placeholder-icon">🌅</span>
+        Sunrise shoot
+      </div>
+      <div class="gallery-overlay"><span class="gallery-caption">Aburi Hills</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="gallery-placeholder-icon">✨</span>
+        Family
+      </div>
+      <div class="gallery-overlay"><span class="gallery-caption">With family</span></div>
+    </div>
+  </div>
+  <a class="gallery-view-all" href="#">View Full Gallery</a>
+</section>
+
+<!-- WISHES -->
+<section class="wishes-section reveal" id="wishes">
+  <p class="section-label">Messages</p>
+  <h2 class="section-title">Wishes & Blessings</h2>
+  <div class="ornament-line"><span>♡</span></div>
+  <div class="wishes-grid">
+    <div class="wish-card">
+      <p class="wish-text">Watching you two together is a reminder that real love still exists. You were made for each other. Wishing you a lifetime of laughter, growth, and deep, unwavering love.</p>
+      <div class="wish-author">
+        <div class="wish-avatar">AM</div>
+        <div>
+          <p class="wish-name">Auntie Mabel</p>
+          <p class="wish-relation">Family · 2 days ago</p>
+        </div>
+      </div>
+    </div>
+    <div class="wish-card">
+      <p class="wish-text">Kwame, you found a queen. Abena, you found your king. May your home always be filled with joy, peace, and a never-ending supply of jollof rice. God bless this union!</p>
+      <div class="wish-author">
+        <div class="wish-avatar">JO</div>
+        <div>
+          <p class="wish-name">Julius Owusu</p>
+          <p class="wish-relation">Friend of the groom · 3 days ago</p>
+        </div>
+      </div>
+    </div>
+    <div class="wish-card">
+      <p class="wish-text">Abena has always been a light in every room. Kwame, you have won the heart of someone extraordinary. Cherish her always. We love you both to the moon and back.</p>
+      <div class="wish-author">
+        <div class="wish-avatar">EB</div>
+        <div>
+          <p class="wish-name">Efua & Bright</p>
+          <p class="wish-relation">Family · 5 days ago</p>
+        </div>
+      </div>
+    </div>
+    <div class="wish-card">
+      <p class="wish-text">From classmates to becoming family — I never imagined this day would come so beautifully. You both deserve every happiness. Here's to forever and always, just as your story says.</p>
+      <div class="wish-author">
+        <div class="wish-avatar">SC</div>
+        <div>
+          <p class="wish-name">Serena Cobbinah</p>
+          <p class="wish-relation">Friend of the bride · 1 week ago</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="wishes-view-all" href="#">View All Wishes</a>
+</section>
+
+<!-- EVENTS -->
+<section class="events-section reveal" id="events">
+  <p class="section-label">Upcoming</p>
+  <h2 class="section-title">Events</h2>
+  <div class="ornament-line"><span>✦</span></div>
+  <div class="events-list">
+
+    <div class="event-card">
+      <div class="event-date-block">
+        <p class="event-month">Jul</p>
+        <p class="event-day">18</p>
+      </div>
+      <div class="event-body">
+        <h3 class="event-name">Traditional Engagement (Knocking)</h3>
+        <p class="event-time">10:00 AM — 3:00 PM</p>
+        <p class="event-location">Abena's Family Home, East Legon, Accra</p>
+        <p class="event-note">Family only. Kente attire encouraged.</p>
+        <span class="event-dress">Dress: Kente & Traditional</span>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <div class="event-date-block">
+        <p class="event-month">Jul</p>
+        <p class="event-day">18</p>
+      </div>
+      <div class="event-body">
+        <h3 class="event-name">Eve of Wedding Gathering</h3>
+        <p class="event-time">7:00 PM — 11:00 PM</p>
+        <p class="event-location">Labadi Beach Hotel, Accra</p>
+        <p class="event-note">Welcome cocktails, light bites, and music with the wedding party.</p>
+        <span class="event-dress">Dress: Smart Casual</span>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <div class="event-date-block">
+        <p class="event-month">Jul</p>
+        <p class="event-day">19</p>
+      </div>
+      <div class="event-body">
+        <h3 class="event-name">Wedding Ceremony</h3>
+        <p class="event-time">11:00 AM</p>
+        <p class="event-location">Christ the King Catholic Church, Cantonments, Accra</p>
+        <p class="event-note">Holy Matrimony. All guests welcome. Please arrive 30 minutes early.</p>
+        <span class="event-dress">Dress: Formal — White & Gold theme</span>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <div class="event-date-block">
+        <p class="event-month">Jul</p>
+        <p class="event-day">19</p>
+      </div>
+      <div class="event-body">
+        <h3 class="event-name">Wedding Reception</h3>
+        <p class="event-time">2:00 PM — Late</p>
+        <p class="event-location">Kempinski Hotel Gold Coast City, Accra</p>
+        <p class="event-note">Dinner, dancing, and celebration. Invitation required.</p>
+        <span class="event-dress">Dress: Black Tie Optional</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RSVP -->
+<section class="rsvp-section reveal" id="rsvp">
+  <p class="section-label">Let us know you're coming</p>
+  <h2 class="section-title">RSVP</h2>
+  <div class="ornament-line"><span>♡</span></div>
+  <div class="rsvp-inner">
+    <div id="rsvp-form-wrap">
+      <form class="rsvp-form" id="rsvp-form" onsubmit="submitRSVP(event)">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="fname">Full Name *</label>
+            <input type="text" id="fname" placeholder="Your full name" required/>
+          </div>
+          <div class="form-field">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="+233 ..."/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="your@email.com"/>
+          </div>
+          <div class="form-field">
+            <label for="guests">Number Attending *</label>
+            <select id="guests" required>
+              <option value="">Select...</option>
+              <option>1 person</option>
+              <option>2 people</option>
+              <option>3 people</option>
+              <option>4 people</option>
+              <option>5 people</option>
+              <option>6+ people</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="event-select">Which events will you attend?</label>
+          <select id="event-select">
+            <option>All events</option>
+            <option>Ceremony & Reception only</option>
+            <option>Reception only</option>
+            <option>Traditional ceremony only</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="notes">Message to the couple (optional)</label>
+          <textarea id="notes" placeholder="Share a wish or blessing…"></textarea>
+        </div>
+        <button type="submit" class="rsvp-btn">Confirm My RSVP ♡</button>
+      </form>
+    </div>
+    <div class="rsvp-success" id="rsvp-success">
+      <div class="rsvp-success-icon">♡</div>
+      <h3 class="rsvp-success-title">Thank you!</h3>
+      <p class="rsvp-success-sub">Your RSVP has been received.<br/>Kwame & Abena are so excited to celebrate with you.<br/>See you on July 19th!</p>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location-section reveal" id="location">
+  <p class="section-label">Find your way</p>
+  <h2 class="section-title">Venue</h2>
+  <div class="ornament-line"><span>✦</span></div>
+  <div class="location-inner">
+    <div class="location-map">
+      <div class="location-map-placeholder">
+        <div class="map-icon">📍</div>
+        <p>Kempinski Hotel Gold Coast City</p>
+        <p style="font-size:0.65rem;margin-top:4px;opacity:0.6;">Gamel Abdul Nasser Ave, Accra</p>
+      </div>
+    </div>
+    <div class="location-details">
+      <div>
+        <p class="location-item-label">Ceremony</p>
+        <p class="location-item-value">Christ the King<br/>Catholic Church<br/>Cantonments, Accra</p>
+      </div>
+      <div>
+        <p class="location-item-label">Reception</p>
+        <p class="location-item-value">Kempinski Hotel<br/>Gold Coast City<br/>Accra, Ghana</p>
+      </div>
+      <div>
+        <p class="location-item-label">Contact</p>
+        <p class="location-item-value">Kwame: +233 24 000 0001<br/>Abena: +233 24 000 0002<br/>wedding@foreverandalways.com</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-ornament">✦ &nbsp; ♡ &nbsp; ✦</p>
+  <h2 class="footer-title">Kwame & Abena</h2>
+  <p class="footer-sub">Forever & Always · July 19, 2025 · Accra, Ghana</p>
+  <div class="footer-line"></div>
+  <p class="footer-copy">© 2025 · Forever & Always · Made with love</p>
+</footer>
+
+<script>
+  // Countdown
+  const weddingDate = new Date('2025-07-19T11:00:00');
+  function updateCountdown() {
+    const now = new Date();
+    const diff = weddingDate - now;
+    if (diff <= 0) {
+      document.getElementById('countdown-bar').innerHTML =
+        '<span style="font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--blush)">✦ Today is the day! ✦</span>';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // RSVP submit
+  function submitRSVP(e) {
+    e.preventDefault();
+    document.getElementById('rsvp-form-wrap').style.display = 'none';
+    document.getElementById('rsvp-success').style.display = 'block';
+  }
+</script>
+</body>
+</html>
